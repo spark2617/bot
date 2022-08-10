@@ -1,13 +1,20 @@
+from distutils.log import error
+from time import sleep
 import speech_recognition as sr
 import pyautogui
 
 
 def verificaPalavra(frase):
-    if "entenderam" or "entender" or "entenderas" or "tranquilo" or "duvida" or "dúvida" or "duvidas"or "dúvidas" not in frase:
-        return False
-    else:
+    if "entender"in frase:
         return True
-
+    elif  "beleza" in frase:
+        return True
+    elif  "tranquilo" in frase:
+        return True
+    elif  "entendeu" in frase:
+        return True
+    else:
+        return False
 
 def ouvir_microfone():
 
@@ -28,10 +35,10 @@ def ouvir_microfone():
         
 
         #Frase para o usuario dizer algo
-        print("Diga alguma coisa: ")
+        print("ouvindo.... ")
 
         
-        microfone.pause_threshold = 0.5
+        #microfone.pause_threshold = 0.7
         #Armazena o que foi dito numa variavel
         audio = microfone.listen(source)
 
@@ -47,22 +54,34 @@ def ouvir_microfone():
         
 
         #Retorna a frase pronunciada
-        # print("Você disse: " + frase)
+        print("Você disse: " + frase)
         if verificaPalavra(frase):
-            pyautogui.click()
+            pyautogui.click(x=1199, y=660)
             pyautogui.write("1")
             pyautogui.press("enter")
+            print("certo")
 
         
 
     #Se nao reconheceu o padrao de fala, exibe a mensagem
     except :
-        pyautogui.click()
-        pyautogui.write("Desculpe, mas não conseguir entender!")
-        pyautogui.press("enter")
-
+        # pyautogui.click(x=1199, y=660)
+        # pyautogui.write("Desculpe, mas não conseguir entender!")
+        # pyautogui.press("enter")
+        print("erro")
         
+def colocaMensagem(mensagem):
+    pyautogui.click(x=1199, y=660)
+    pyautogui.write(mensagem)
+    pyautogui.press("enter")
 
-
+#para dizer que esta ligado
+print("ativo!")
+# tempo para entrar no zoom
+sleep(5)
+colocaMensagem("ativando bot ....")
+sleep(2)
+colocaMensagem("pronto!")
+# print(verificaPalavra("a segunda opção não seria meu resultante"))
 while True:
     ouvir_microfone()
